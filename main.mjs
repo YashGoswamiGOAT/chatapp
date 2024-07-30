@@ -32,4 +32,7 @@ export class ChatEngine {
         } ;
         return {...(await this.client.db('app').collection('users').insertOne(user)),status : 'Success'};
     }
+    async GetUser(username,password){
+        return await this.client.db('app').collection('users').findOne({username : username,password : password}) ;
+    }
 }
