@@ -30,7 +30,15 @@ export class ChatEngine {
             status : 'UserExist',
             message : 'User already exists'
         } ;
-        return {...(await this.client.db('app').collection('users').insertOne(user)),status : 'Success'};
+        await this.client.db('app').collection('profiles').insertOne({
+            username : user.username,
+            profile : user.profile.avatar
+        }) ;
+        return {...(await this.client.db('app').collection('users').insertOne({
+            username : user.username,
+            name : user.name,
+            password : user.password,
+            })),status : 'Success'};
     }
     async GetUser(username,password){
         return await this.client.db('app').collection('users').findOne({username : username,password : password}) ;
