@@ -32,5 +32,26 @@ app.post('/login', async (req, res) => {
     await chatEngine.disconnect() ;
     res.send(response) ;
 }) ;
+app.post('/getprofiles', async (req, res) => {
+    const chatEngine = new ChatEngine() ;
+    await chatEngine.connect() ;
+    const response = await chatEngine.GetProfiles(req.body.username) ;
+    await chatEngine.disconnect() ;
+    res.send(response) ;
+}) ;
+app.post('/send', async (req, res) => {
+    const chatEngine = new ChatEngine() ;
+    await chatEngine.connect() ;
+    const response = await chatEngine.SendMessage(req.body) ;
+    await chatEngine.disconnect() ;
+    res.send(response) ;
+}) ;
+app.post('/messages', async (req, res) => {
+    const chatEngine = new ChatEngine() ;
+    await chatEngine.connect() ;
+    const response = await chatEngine.GetMessages(req.body.from,req.body.to) ;
+    await chatEngine.disconnect() ;
+    res.send(response) ;
+}) ;
 
 app.listen(3001) ;
