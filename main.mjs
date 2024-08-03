@@ -52,18 +52,19 @@ export class ChatEngine {
             ]
         }).toArray() ;
     }
-    async GetMessagesAdmin(){
-        return await this.client.db('app').collection('messages').find({
-            $or : [
-                {from : 'admin'},
-                {from : 'admin'},
-            ]
-        }).toArray() ;
-    }
     async GetProfiles(username){
-        return await this.client.db('app').collection('users').find({
+        let profiles = await this.client.db('app').collection('users').find({
             username : {$ne : username}
         }).toArray() ;
+        profiles = profiles.map(async ele=>{
+            let msgs_ = await this.GetMessages(username,ele.username) ;
+            return {
+                username : ele.username,
+                name : ele.name,
+                lastMSG : msgs_[msgs_.length-1]
+            } ;
+        }) ;
+        return await Promise.all(profiles) ;
     }
     async GetUser(username,password){
         return await this.client.db('app').collection('users').findOne({username : username,password : password}) ;
