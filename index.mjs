@@ -28,7 +28,7 @@ io.on('connection', (socket) => {
         await chatEngine.SendMessage(msg);
         const response = await chatEngine.GetMessages(msg.from,msg.to);
         await chatEngine.disconnect();
-        socket.emit('receive message', response);
+        io.emit('receive message', response);
     });
     socket.on('request Messages',async (users)=>{
         const chatEngine = new ChatEngine();
