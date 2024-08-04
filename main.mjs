@@ -61,7 +61,7 @@ export class ChatEngine {
             return {
                 username : ele.username,
                 name : ele.name,
-                lastMSG : msgs_[msgs_.length-1]
+                lastMSG : msgs_[msgs_.length-1] ? msgs_[msgs_.length-1].msg : ''
             } ;
         }) ;
         return await Promise.all(profiles) ;

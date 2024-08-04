@@ -28,14 +28,14 @@ io.on('connection', (socket) => {
         await chatEngine.SendMessage(msg);
         const response = await chatEngine.GetMessages(msg.from,msg.to);
         await chatEngine.disconnect();
-        io.emit('receive message', response);
+        socket.emit('receive message', response);
     });
     socket.on('request Messages',async (users)=>{
         const chatEngine = new ChatEngine();
         await chatEngine.connect();
         const response = await chatEngine.GetMessages(users.from,users.to);
         await chatEngine.disconnect();
-        io.emit('receive message', response);
+        socket.emit('receive message', response);
     })
     socket.on('disconnect', () => {
         console.log('User disconnected');
